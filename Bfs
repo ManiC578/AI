@@ -1,0 +1,35 @@
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F', 'G'],
+    'D': [],
+    'E': [],
+    'F': [],
+    'G': []
+}
+target = input("Enter target variable in sequence (e.g., ABC): ")
+target2 = list(target)  # list of characters
+print(target2)
+def bfs(graph, node, target):
+    vis = []
+    queue = []
+    queue.append(node)
+    vis.append(node)
+    flag = 1
+    while queue:
+        s = queue.pop(0)
+        print(s, end=" ")
+        if s == target:        # <-- STOP BFS when we reach the target
+            break
+        if flag == 1:
+            for neighbour in graph[s]:
+                if neighbour not in vis:
+                    vis.append(neighbour)
+                    queue.append(neighbour)
+                    if neighbour == target:
+                        flag = 0
+                        break
+for target_item in target2:
+    bfs(graph, 'A', target_item)
+    print("\n")
+
