@@ -1,0 +1,35 @@
+from collections import deque
+def solve(start, goal):
+    queue = deque([(start, [])])
+    visited = set()
+    while queue:
+        state, path = queue.popleft()
+        if state == goal:
+            return path + [state]
+        if state in visited:
+            continue
+        visited.add(state)
+        z = state.index(0)
+        r, c = divmod(z, 3)
+        for dr, dc in [(-1,0),(1,0),(0,-1),(0,1)]:
+            nr, nc = r+dr, c+dc
+            if 0 <= nr < 3 and 0 <= nc < 3:
+                lst = list(state)
+                ni = nr*3 + nc
+                lst[z], lst[ni] = lst[ni], lst[z]
+                queue.append((tuple(lst), path + [state]))
+    return None
+# Example
+start = (2,8,3,1,6,4,7,0,5)
+goal  = (1,2,3,8,0,4,7,6,5)
+solution = solve(start, goal)
+if solution:
+    print("Solution Steps:\n")
+    for step in solution:
+        for i in range(0, 9, 3):
+            print(step[i:i+3])
+        print()
+else:
+    print("No solution found.")
+
+
