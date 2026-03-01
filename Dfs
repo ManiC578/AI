@@ -1,0 +1,31 @@
+graph = {
+    'A': ['B', 'C'],
+    'B': ['D', 'E'],
+    'C': ['F', 'G'],
+    'D': [],
+    'E': [],
+    'F': [],
+    'G': []
+}
+target = input("Enter target variable in sequence (e.g., ABC): ")
+target2 = list(target)  # list of characters
+print(target2)
+def dfs(graph, node, target):
+    vis = []
+    stack = []
+    stack.append(node)
+    while stack:
+        s = stack.pop()
+        if s not in vis:
+            print(s, end=" ")
+            vis.append(s)
+            if s == target:    # STOP DFS when we reach the target
+                break
+            # add neighbors in reversed order to match usual DFS traversal
+            for neighbour in reversed(graph[s]):
+                if neighbour not in vis:
+                    stack.append(neighbour)
+for target_item in target2:
+    dfs(graph, 'A', target_item)
+    print("\n")
+
