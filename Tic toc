@@ -1,0 +1,45 @@
+import random
+board = [" "] * 9
+def show():
+    for i in range(0, 9, 3):
+        print(board[i], "|", board[i+1], "|", board[i+2])
+    print()
+def move(icon, computer=False):
+    while True:
+        if computer:
+            pos = random.randint(1, 9)
+            print("Computer chose:", pos)
+        else:
+            pos = int(input("Player " + icon + " (1-9): "))
+        if 1 <= pos <= 9 and board[pos-1] == " ":
+            board[pos-1] = icon
+            break
+        else:
+            print("Invalid move. Try again.")
+def win(icon):
+    combos = [(0,1,2),(3,4,5),(6,7,8),
+              (0,3,6),(1,4,7),(2,5,8),
+              (0,4,8),(2,4,6)]
+    for a,b,c in combos:
+        if board[a]==board[b]==board[c]==icon:
+            return True
+    return False
+mode = int(input("1: Player vs Computer\n2: Player vs Player\nChoose: "))
+while True:
+    show()
+    move("X")
+    if win("X"):
+        print("X Wins!")
+        break
+    if " " not in board:
+        print("Draw!")
+        break
+    show()
+    move("O", mode==1)
+    if win("O"):
+        print("O Wins!")
+        break
+    if " " not in board:
+        print("Draw!")
+        break
+
